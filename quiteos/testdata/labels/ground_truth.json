@@ -1,0 +1,238 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-10-22T20:00:00Z",
+  "sample_count": 30,
+  "annotations": {
+    "msg-001": {
+      "category": "action_required",
+      "priority": "urgent",
+      "action_text": "Patch production clusters with OpenSSL CVE fix",
+      "has_explicit_deadline": true,
+      "deadline_text": "today at 5:00 PM UTC",
+      "resolved_due_at": "2026-10-22T17:00:00Z",
+      "evidence_snippet": "Deadline is today at 5:00 PM UTC."
+    },
+    "msg-002": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Review staging QA regression report and sign off for Orion v2.0",
+      "has_explicit_deadline": true,
+      "deadline_text": "Thursday noon (October 23, 12:00 PM)",
+      "resolved_due_at": "2026-10-23T12:00:00Z",
+      "evidence_snippet": "provide sign-off by Thursday noon (October 23, 12:00 PM)"
+    },
+    "msg-003": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Review staging QA regression report (Extended deadline)",
+      "has_explicit_deadline": true,
+      "deadline_text": "Friday at 3:00 PM",
+      "resolved_due_at": "2026-10-24T15:00:00Z",
+      "evidence_snippet": "extending the sign-off deadline to Friday at 3:00 PM",
+      "linked_thread_id": "th-orion-launch"
+    },
+    "msg-004": {
+      "category": "informational",
+      "priority": "low",
+      "action_text": "",
+      "has_explicit_deadline": false,
+      "linked_thread_id": "th-orion-launch"
+    },
+    "msg-005": {
+      "category": "newsletter",
+      "priority": "low",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-006": {
+      "category": "transactional",
+      "priority": "normal",
+      "action_text": "Pay or forward CloudServices invoice for $432.50",
+      "has_explicit_deadline": true,
+      "deadline_text": "October 25, 2026",
+      "resolved_due_at": "2026-10-25T23:59:59Z",
+      "evidence_snippet": "Due Date: October 25, 2026"
+    },
+    "msg-007": {
+      "category": "informational",
+      "priority": "low",
+      "action_text": "Respond to coffee invite if desired",
+      "has_explicit_deadline": false,
+      "is_ambiguous": true,
+      "deadline_text": "sometime next week"
+    },
+    "msg-008": {
+      "category": "action_required",
+      "priority": "urgent",
+      "action_text": "Verify DNS challenge and renew expiring SSL certificate for api.internal.techcorp.com",
+      "has_explicit_deadline": true,
+      "deadline_text": "October 24 at 06:00 UTC",
+      "resolved_due_at": "2026-10-24T06:00:00Z",
+      "evidence_snippet": "reissue the certificate before October 24 at 06:00 UTC"
+    },
+    "msg-009": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Review Exhibit B DPA redlines and confirm acceptance to Legal",
+      "has_explicit_deadline": true,
+      "deadline_text": "tomorrow at 4:00 PM (October 23)",
+      "resolved_due_at": "2026-10-23T16:00:00Z",
+      "evidence_snippet": "confirm your agreement by tomorrow at 4:00 PM (October 23)"
+    },
+    "msg-010": {
+      "category": "informational",
+      "priority": "low",
+      "action_text": "Vote in Friday lunch poll",
+      "has_explicit_deadline": true,
+      "deadline_text": "Wednesday at 2:00 PM"
+    },
+    "msg-011": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Submit code review for PR #1402 idempotent reminder worker",
+      "has_explicit_deadline": true,
+      "deadline_text": "tomorrow's release freeze at 11:00 AM",
+      "resolved_due_at": "2026-10-23T11:00:00Z",
+      "evidence_snippet": "submit your code review before tomorrow's release freeze at 11:00 AM"
+    },
+    "msg-012": {
+      "category": "transactional",
+      "priority": "low",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-013": {
+      "category": "action_required",
+      "priority": "normal",
+      "action_text": "Select workstation refresh spec in IT portal",
+      "has_explicit_deadline": true,
+      "deadline_text": "Monday, October 27, 2026",
+      "resolved_due_at": "2026-10-27T23:59:59Z"
+    },
+    "msg-014": {
+      "category": "informational",
+      "priority": "low",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-015": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Spin up Acme Corp multi-tenant sandbox environment and send credentials",
+      "has_explicit_deadline": true,
+      "deadline_text": "Thursday, October 23 at 5:00 PM",
+      "resolved_due_at": "2026-10-23T17:00:00Z",
+      "evidence_snippet": "Thursday, October 23 at 5:00 PM"
+    },
+    "msg-016": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Load sample accounts into Acme sandbox (follow-up data)",
+      "has_explicit_deadline": true,
+      "deadline_text": "Thursday at 5:00 PM",
+      "resolved_due_at": "2026-10-23T17:00:00Z",
+      "linked_thread_id": "th-client-demo"
+    },
+    "msg-017": {
+      "category": "newsletter",
+      "priority": "low",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-018": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Sign speaker confirmation form and submit bio for GopherCon 2026",
+      "has_explicit_deadline": true,
+      "deadline_text": "Monday, October 26, 2026, 23:59 UTC",
+      "resolved_due_at": "2026-10-26T23:59:00Z",
+      "evidence_snippet": "Monday, October 26, 2026, 23:59 UTC"
+    },
+    "msg-019": {
+      "category": "newsletter",
+      "priority": "low",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-020": {
+      "category": "action_required",
+      "priority": "urgent",
+      "action_text": "Investigate unexpected GPU instance usage triggering $5,000 CloudWatch alert",
+      "has_explicit_deadline": false,
+      "evidence_snippet": "Investigate active EC2 GPU instances immediately."
+    },
+    "msg-021": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Upload KMS rotation logs for SOC2 audit item CC6.1",
+      "has_explicit_deadline": true,
+      "deadline_text": "Friday, October 24 at 17:00 UTC",
+      "resolved_due_at": "2026-10-24T17:00:00Z",
+      "evidence_snippet": "Friday, October 24 at 17:00 UTC"
+    },
+    "msg-022": {
+      "category": "informational",
+      "priority": "high",
+      "action_text": "CloudTrail export is acceptable format for audit logs",
+      "has_explicit_deadline": true,
+      "deadline_text": "Friday October 24",
+      "resolved_due_at": "2026-10-24T17:00:00Z",
+      "linked_thread_id": "th-security-audit"
+    },
+    "msg-023": {
+      "category": "informational",
+      "priority": "normal",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-024": {
+      "category": "informational",
+      "priority": "normal",
+      "action_text": "Focus on OpenSSL patch (standup cancelled)",
+      "has_explicit_deadline": false
+    },
+    "msg-025": {
+      "category": "newsletter",
+      "priority": "low",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-026": {
+      "category": "transactional",
+      "priority": "normal",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-027": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Upgrade partner API tier or optimize queries before quota exhaustion",
+      "has_explicit_deadline": true,
+      "deadline_text": "November 1",
+      "resolved_due_at": "2026-11-01T00:00:00Z"
+    },
+    "msg-028": {
+      "category": "informational",
+      "priority": "low",
+      "action_text": "",
+      "has_explicit_deadline": false
+    },
+    "msg-029": {
+      "category": "action_required",
+      "priority": "high",
+      "action_text": "Submit interview scorecard for candidate Marcus Brody in Greenhouse",
+      "has_explicit_deadline": true,
+      "deadline_text": "Wednesday at 12:00 PM (October 22)",
+      "resolved_due_at": "2026-10-22T12:00:00Z",
+      "evidence_snippet": "Wednesday at 12:00 PM (October 22)"
+    },
+    "msg-030": {
+      "category": "informational",
+      "priority": "normal",
+      "action_text": "Shut down on-premise dev servers Friday evening before Saturday power maintenance",
+      "has_explicit_deadline": true,
+      "deadline_text": "Friday evening",
+      "resolved_due_at": "2026-10-23T20:00:00Z"
+    }
+  }
+}
