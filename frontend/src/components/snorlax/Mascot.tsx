@@ -117,6 +117,60 @@ export const Mascot: React.FC<MascotProps> = ({
             filter: 'drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.16))',
           }}
         />
+
+        {/* Floating animated Z glyphs drifting gracefully beyond the painted snore trail */}
+        {(isHero || isLg) && (
+          <>
+            <svg
+              className="floating-z-1"
+              aria-hidden="true"
+              viewBox="0 0 125 115"
+              style={{
+                position: 'absolute',
+                top: isHero ? '-14%' : '-20%',
+                left: isHero ? '9%' : '5%',
+                width: isHero ? '28px' : '16px',
+                height: isHero ? '25px' : '14px',
+                pointerEvents: 'none',
+                overflow: 'visible',
+                zIndex: 5,
+              }}
+            >
+              <path
+                d="M 22,20 L 104,40 L 20,82 L 104,98"
+                fill="none"
+                stroke="var(--snorlax-outline, #00323F)"
+                strokeWidth="24"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <svg
+              className="floating-z-2"
+              aria-hidden="true"
+              viewBox="0 0 125 115"
+              style={{
+                position: 'absolute',
+                top: isHero ? '-24%' : '-30%',
+                left: isHero ? '2%' : '-2%',
+                width: isHero ? '22px' : '13px',
+                height: isHero ? '20px' : '12px',
+                pointerEvents: 'none',
+                overflow: 'visible',
+                zIndex: 5,
+              }}
+            >
+              <path
+                d="M 22,20 L 104,40 L 20,82 L 104,98"
+                fill="none"
+                stroke="var(--snorlax-outline, #00323F)"
+                strokeWidth="24"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </>
+        )}
       </div>
     );
   }

@@ -187,53 +187,59 @@ input, textarea, select {
   animation: fadeIn 150ms ease-out forwards;
 }
 
-/* Floating extra Z glyphs tilted and colored to match reference artwork */
+/* Floating extra Z glyphs tilted and styled to match authentic reference artwork */
 @keyframes zFloatDrift1 {
   0% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.85);
+    transform: translate(0, 0) rotate(-16deg) scale(0.85);
   }
-  20% {
-    opacity: 0.95;
+  25% {
+    opacity: 0.8;
+    transform: translate(-8px, -12px) rotate(-19deg) scale(0.95);
   }
-  70% {
-    opacity: 0.85;
+  65% {
+    opacity: 0.65;
+    transform: translate(-20px, -26px) rotate(-22deg) scale(1.05);
   }
   100% {
     opacity: 0;
-    transform: translate(-30px, -42px) scale(1.15);
+    transform: translate(-34px, -44px) rotate(-26deg) scale(1.15);
   }
 }
 
 @keyframes zFloatDrift2 {
   0% {
     opacity: 0;
-    transform: translate(0, 0) scale(0.8);
+    transform: translate(0, 0) rotate(-18deg) scale(0.8);
   }
-  25% {
-    opacity: 0.9;
-  }
-  75% {
+  30% {
     opacity: 0.75;
+    transform: translate(-8px, -12px) rotate(-22deg) scale(0.9);
+  }
+  70% {
+    opacity: 0.55;
+    transform: translate(-22px, -28px) rotate(-17deg) scale(1.0);
   }
   100% {
     opacity: 0;
-    transform: translate(-38px, -52px) scale(1.2);
+    transform: translate(-36px, -46px) rotate(-24deg) scale(1.12);
   }
 }
 
 .floating-z-1 {
-  animation: zFloatDrift1 2.8s ease-out infinite;
+  animation: zFloatDrift1 3.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   display: inline-block;
   pointer-events: none;
   user-select: none;
+  will-change: transform, opacity;
 }
 
 .floating-z-2 {
-  animation: zFloatDrift2 2.8s ease-out infinite 1.4s;
+  animation: zFloatDrift2 3.2s cubic-bezier(0.22, 1, 0.36, 1) infinite 1.6s;
   display: inline-block;
   pointer-events: none;
   user-select: none;
+  will-change: transform, opacity;
 }
 
 /* SVG Sleepy Zzz gentle float */

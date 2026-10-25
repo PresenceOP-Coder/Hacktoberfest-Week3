@@ -259,6 +259,7 @@ export const DailyDigestView: React.FC = () => {
       <div style={{ position: 'relative', marginTop: '12px' }}>
         {/* Taped sticky note tip anchored in content column, overlapping top-right corner */}
         <div
+          className="morning-sticky-tip-wrapper"
           style={{
             position: 'absolute',
             top: '-20px',
@@ -381,6 +382,9 @@ export const DailyDigestView: React.FC = () => {
           {/* Responsive mobile styling for hero */}
           <style>{`
             @media (max-width: 680px) {
+              .morning-sticky-tip-wrapper {
+                display: none !important;
+              }
               .morning-hero-layout {
                 flex-direction: column !important;
                 align-items: center !important;
