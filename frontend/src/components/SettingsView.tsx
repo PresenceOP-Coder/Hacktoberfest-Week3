@@ -438,7 +438,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <Mascot pose="belly" size="md" alt="Snorlax Belly resting" />
+            <Mascot pose="sleeping" size="md" alt="Sleeping Snorlax resting in Sleep Mode arc" />
           </div>
 
           <div

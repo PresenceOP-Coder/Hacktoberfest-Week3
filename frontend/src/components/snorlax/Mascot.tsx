@@ -49,11 +49,13 @@ export const Mascot: React.FC<MascotProps> = ({
 
   const px = pixelSizes[size] || 56;
 
-  // 1. HERO & LG SLEEPING POSE (Clean transparent Snorlax art)
-  if (pose === 'sleeping' && (size === 'hero' || size === 'lg')) {
+  // 1. HERO, LG, MD, SM SLEEPING & BELLY POSE (Clean transparent Snorlax art matching homepage)
+  if (pose === 'sleeping' || pose === 'belly') {
     const isHero = size === 'hero';
-    const width = isHero ? '260px' : '120px';
-    const height = isHero ? '210px' : '90px';
+    const isLg = size === 'lg';
+    const isMd = size === 'md';
+    const width = isHero ? '260px' : isLg ? '120px' : isMd ? '82px' : '44px';
+    const height = isHero ? '240px' : isLg ? '110px' : isMd ? '76px' : '40px';
     return (
       <div
         className={`snorlax-hero-mascot ${className} ${bouncing ? 'belly-clicked' : ''}`}
@@ -116,131 +118,58 @@ export const Mascot: React.FC<MascotProps> = ({
           }}
         />
 
-        {/* 2 Floating SVG Z glyphs perfectly matching the reference artwork's tilt, color & shape */}
-        <svg
-          className="floating-z-1"
-          aria-hidden="true"
-          viewBox="0 0 120 100"
-          style={{
-            position: 'absolute',
-            top: isHero ? '10%' : '2%',
-            left: isHero ? '34%' : '28%',
-            width: isHero ? '26px' : '16px',
-            height: isHero ? '22px' : '14px',
-            pointerEvents: 'none',
-            overflow: 'visible',
-          }}
-        >
-          <path
-            d="M 18,18 L 98,38 L 16,84 L 96,96"
-            fill="none"
-            stroke="var(--snorlax-outline, #00323F)"
-            strokeWidth="24"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <svg
-          className="floating-z-2"
-          aria-hidden="true"
-          viewBox="0 0 120 100"
-          style={{
-            position: 'absolute',
-            top: isHero ? '2%' : '-6%',
-            left: isHero ? '24%' : '18%',
-            width: isHero ? '20px' : '13px',
-            height: isHero ? '17px' : '11px',
-            pointerEvents: 'none',
-            overflow: 'visible',
-          }}
-        >
-          <path
-            d="M 18,18 L 98,38 L 16,84 L 96,96"
-            fill="none"
-            stroke="var(--snorlax-outline, #00323F)"
-            strokeWidth="24"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        {/* Floating SVG Z glyphs for hero and large sizes */}
+        {(isHero || isLg) && (
+          <>
+            <svg
+              className="floating-z-1"
+              aria-hidden="true"
+              viewBox="0 0 120 100"
+              style={{
+                position: 'absolute',
+                top: isHero ? '10%' : '2%',
+                left: isHero ? '34%' : '28%',
+                width: isHero ? '26px' : '16px',
+                height: isHero ? '22px' : '14px',
+                pointerEvents: 'none',
+                overflow: 'visible',
+              }}
+            >
+              <path
+                d="M 18,18 L 98,38 L 16,84 L 96,96"
+                fill="none"
+                stroke="var(--snorlax-outline, #00323F)"
+                strokeWidth="24"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <svg
+              className="floating-z-2"
+              aria-hidden="true"
+              viewBox="0 0 120 100"
+              style={{
+                position: 'absolute',
+                top: isHero ? '2%' : '-6%',
+                left: isHero ? '24%' : '18%',
+                width: isHero ? '20px' : '13px',
+                height: isHero ? '17px' : '11px',
+                pointerEvents: 'none',
+                overflow: 'visible',
+              }}
+            >
+              <path
+                d="M 18,18 L 98,38 L 16,84 L 96,96"
+                fill="none"
+                stroke="var(--snorlax-outline, #00323F)"
+                strokeWidth="24"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </>
+        )}
       </div>
-    );
-  }
-
-  // 2. SLEEPING POSE (SVG for sm, md, lg)
-  if (pose === 'sleeping') {
-    return (
-      <svg
-        width={px}
-        height={px}
-        viewBox="0 0 120 120"
-        xmlns="http://www.w3.org/2000/svg"
-        className={`${className} snorlax-breathe ${bouncing ? 'belly-clicked' : ''}`}
-        onClick={handleBellyClick}
-        style={{ display: 'inline-block', overflow: 'visible', cursor: 'pointer', ...style }}
-        aria-label={alt || "Sleeping Snorlax"}
-      >
-        {/* Ears */}
-        <polygon points="26,38 34,14 46,32" fill="#00627A" stroke="#00323F" strokeWidth="3" strokeLinejoin="round" />
-        <polygon points="94,38 86,14 74,32" fill="#00627A" stroke="#00323F" strokeWidth="3" strokeLinejoin="round" />
-        <polygon points="30,34 35,19 43,30" fill="#FFE4B5" opacity="0.6" />
-        <polygon points="90,34 85,19 77,30" fill="#FFE4B5" opacity="0.6" />
-
-        {/* Main Body */}
-        <ellipse cx="60" cy="72" rx="46" ry="38" fill="#00627A" stroke="#00323F" strokeWidth="3" />
-
-        {/* Cream Belly */}
-        <ellipse cx="60" cy="74" rx="34" ry="28" fill="#FFE4B5" stroke="#00323F" strokeWidth="2.5" />
-
-        {/* Feet with peach foot pads & white claws */}
-        <ellipse cx="28" cy="102" rx="14" ry="9" fill="#FFE4B5" stroke="#00323F" strokeWidth="2.5" />
-        <ellipse cx="28" cy="102" rx="9" ry="5" fill="#F9C98F" />
-        <circle cx="21" cy="98" r="2" fill="#FFFFFF" stroke="#00323F" strokeWidth="1" />
-        <circle cx="28" cy="97" r="2" fill="#FFFFFF" stroke="#00323F" strokeWidth="1" />
-        <circle cx="35" cy="98" r="2" fill="#FFFFFF" stroke="#00323F" strokeWidth="1" />
-
-        <ellipse cx="92" cy="102" rx="14" ry="9" fill="#FFE4B5" stroke="#00323F" strokeWidth="2.5" />
-        <ellipse cx="92" cy="102" rx="9" ry="5" fill="#F9C98F" />
-        <circle cx="85" cy="98" r="2" fill="#FFFFFF" stroke="#00323F" strokeWidth="1" />
-        <circle cx="92" cy="97" r="2" fill="#FFFFFF" stroke="#00323F" strokeWidth="1" />
-        <circle cx="99" cy="98" r="2" fill="#FFFFFF" stroke="#00323F" strokeWidth="1" />
-
-        {/* Head */}
-        <circle cx="60" cy="44" r="28" fill="#00627A" stroke="#00323F" strokeWidth="3" />
-
-        {/* Face Cream Patch */}
-        <path
-          d="M 40,36 C 42,28 50,26 60,26 C 70,26 78,28 80,36 C 82,46 76,58 60,58 C 44,58 38,46 40,36 Z"
-          fill="#FFE4B5"
-          stroke="#00323F"
-          strokeWidth="2"
-        />
-
-        {/* Sleepy Eyes (Happy closed curves) */}
-        <path d="M 46,40 Q 51,44 56,40" fill="none" stroke="#00323F" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M 64,40 Q 69,44 74,40" fill="none" stroke="#00323F" strokeWidth="2.5" strokeLinecap="round" />
-
-        {/* Nose */}
-        <ellipse cx="60" cy="45" rx="1.5" ry="1" fill="#00323F" />
-
-        {/* Sleepy Smile */}
-        <path d="M 54,49 Q 60,53 66,49" fill="none" stroke="#00323F" strokeWidth="2" strokeLinecap="round" />
-
-        {/* Two tiny white fangs */}
-        <polygon points="53,49 55,49 54,53" fill="#FFFFFF" stroke="#00323F" strokeWidth="1" />
-        <polygon points="65,49 67,49 66,53" fill="#FFFFFF" stroke="#00323F" strokeWidth="1" />
-
-        {/* Arms resting on belly */}
-        <ellipse cx="24" cy="62" rx="11" ry="8" transform="rotate(25 24 62)" fill="#00627A" stroke="#00323F" strokeWidth="2.5" />
-        <ellipse cx="96" cy="62" rx="11" ry="8" transform="rotate(-25 96 62)" fill="#00627A" stroke="#00323F" strokeWidth="2.5" />
-
-        {/* Zzz floating bubbles drifting up & to the left matching reference artwork */}
-        <g stroke="#00323F" strokeLinecap="round" strokeLinejoin="round" fill="none">
-          <path d="M 46,26 L 53,28 L 45,32 L 52,33" strokeWidth="2.2" className="zzz-1" />
-          <path d="M 34,16 L 43,18 L 33,23 L 42,24" strokeWidth="2.6" className="zzz-2" />
-          <path d="M 21,5 L 32,8 L 20,14 L 31,16" strokeWidth="3" className="zzz-3" />
-        </g>
-      </svg>
     );
   }
 
