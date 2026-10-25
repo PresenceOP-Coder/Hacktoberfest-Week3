@@ -774,7 +774,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         ) : (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
             <span style={{ fontSize: '14px', color: 'var(--muted)' }}>
-              Tokens stored safely in <code>quiteos/gmail_token.json</code>.
+              Tokens stored safely in <code>backend/gmail_token.json</code>.
             </span>
             <LazyButton
               variant="primary"

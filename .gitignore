@@ -37,8 +37,8 @@ Thumbs.db
 
 # Google OAuth Secrets & Tokens
 credentials.json
-quiteos/credentials.json
+backend/credentials.json
 gmail_token.json
-quiteos/gmail_token.json
+backend/gmail_token.json
 client_secret*.json
 *.json.token

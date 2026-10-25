@@ -133,7 +133,7 @@ If a coworker emails a project brief on Monday, sends a clarification on Tuesday
 
 ## Benchmark and Evaluation Metrics
 
-The pipeline is continuously evaluated against a labeled synthetic suite of thirty representative emails ([`testdata/emails/fixtures.json`](file:///d:/Hackathons/Hacktoberfest-Week3/quiteos/testdata/emails/fixtures.json)):
+The pipeline is continuously evaluated against a labeled synthetic suite of thirty representative emails ([`testdata/emails/fixtures.json`](file:///d:/Hackathons/Hacktoberfest-Week3/backend/testdata/emails/fixtures.json)):
 
 | Metric | Measured Score | Hackathon Target | Assessment |
 | :--- | :---: | :---: | :--- |
@@ -206,10 +206,10 @@ ollama pull gemma2:2b
 
 #### 2. Start the Backend
 ```powershell
-cd quiteos
+cd backend
 go run ./cmd/snoozebox
 ```
-The server initializes `quietos.db`, runs database migrations, imports thirty sample fixtures, executes initial analysis, and listens at `http://127.0.0.1:8080`.
+The server initializes `snoozebox.db`, runs database migrations, imports thirty sample fixtures, executes initial analysis, and listens at `http://127.0.0.1:8080`.
 
 #### 3. Start the Frontend
 ```powershell
@@ -231,7 +231,7 @@ cd frontend
 npm run build
 
 # 2. Compile the Go binary
-cd ../quiteos
+cd ../backend
 go build -o snoozebox.exe ./cmd/snoozebox
 
 # 3. Run the application
@@ -254,10 +254,9 @@ Hacktoberfest-Week3/
 │   ├── morning-1440-light.png        # Morning Digest desktop preview
 │   ├── settings-1440-light.png       # Settings view preview
 │   └── ...
-├── quiteos/                          # Go Backend Service
+├── backend/                          # Go Backend Service
 │   ├── cmd/
-│   │   ├── snoozebox/                # Primary executable entry point
-│   │   └── quietos/                  # Backward-compatible alias
+│   │   └── snoozebox/                # Primary executable entry point
 │   ├── internal/
 │   │   ├── ai/                       # Ollama Gemma 2 adapter and JSON schema validation
 │   │   ├── analysis/                 # Deadline resolver and evaluation tests

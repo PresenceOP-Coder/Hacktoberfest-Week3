@@ -53,7 +53,7 @@ try {
 # 3. Start Backend & Open Browser
 Write-Host "[2/3] Launching SnoozeBox Core Server on http://127.0.0.1:8080..." -ForegroundColor Gray
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-Set-Location -Path "$root\quiteos"
+Set-Location -Path "$root\backend"
 
 # Open default browser after a short delay
 Start-Job -ScriptBlock {
