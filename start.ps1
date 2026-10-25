@@ -6,7 +6,7 @@
 $ErrorActionPreference = "Stop"
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "  🦥 Starting SnoozeBox — Local Email Attention Manager   " -ForegroundColor Cyan
+Write-Host "  Starting SnoozeBox -- Local Email Attention Manager   " -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host ""
 
