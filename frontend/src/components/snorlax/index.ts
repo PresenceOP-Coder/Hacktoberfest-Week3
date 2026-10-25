@@ -36,4 +36,4 @@ export { PokeFluteButton } from './PokeFlute';
 export { RouteBlocked } from './RouteBlocked';
 export { ConfirmSheet } from './ConfirmSheet';
 export { SleepyRoute } from './SleepyRoute';
-export { SoundToggle, snorlaxSound } from './SoundToggle';
+export { SoundToggle, snorlaxSound, BedsideMusicPlayer } from './SoundToggle';

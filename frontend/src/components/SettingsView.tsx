@@ -9,6 +9,7 @@ import {
   BellySkeleton,
   SectionDoodle,
   snorlaxSound,
+  BedsideMusicPlayer,
 } from './snorlax';
 import {
   Moon,
@@ -527,6 +528,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 }}
               />
             </div>
+          </div>
+
+          {/* Bedside Relaxing Music Player */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <label style={{ fontSize: '15px', fontWeight: 800, color: 'var(--ink)' }}>
+                Bedside Poké Flute Radio
+              </label>
+              <span style={{ fontSize: '13px', color: 'var(--muted)' }}>
+                Relaxing piano cover for focus, reading, and nap time.
+              </span>
+            </div>
+            <BedsideMusicPlayer />
           </div>
 
           {/* VIP Senders */}
