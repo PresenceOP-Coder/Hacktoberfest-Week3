@@ -117,58 +117,6 @@ export const Mascot: React.FC<MascotProps> = ({
             filter: 'drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.16))',
           }}
         />
-
-        {/* Floating SVG Z glyphs for hero and large sizes */}
-        {(isHero || isLg) && (
-          <>
-            <svg
-              className="floating-z-1"
-              aria-hidden="true"
-              viewBox="0 0 120 100"
-              style={{
-                position: 'absolute',
-                top: isHero ? '10%' : '2%',
-                left: isHero ? '34%' : '28%',
-                width: isHero ? '26px' : '16px',
-                height: isHero ? '22px' : '14px',
-                pointerEvents: 'none',
-                overflow: 'visible',
-              }}
-            >
-              <path
-                d="M 18,18 L 98,38 L 16,84 L 96,96"
-                fill="none"
-                stroke="var(--snorlax-outline, #00323F)"
-                strokeWidth="24"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <svg
-              className="floating-z-2"
-              aria-hidden="true"
-              viewBox="0 0 120 100"
-              style={{
-                position: 'absolute',
-                top: isHero ? '2%' : '-6%',
-                left: isHero ? '24%' : '18%',
-                width: isHero ? '20px' : '13px',
-                height: isHero ? '17px' : '11px',
-                pointerEvents: 'none',
-                overflow: 'visible',
-              }}
-            >
-              <path
-                d="M 18,18 L 98,38 L 16,84 L 96,96"
-                fill="none"
-                stroke="var(--snorlax-outline, #00323F)"
-                strokeWidth="24"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </>
-        )}
       </div>
     );
   }
