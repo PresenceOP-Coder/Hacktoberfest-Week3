@@ -1,0 +1,162 @@
+/* ============================================================
+   SnoozeBox — Snorlax Cozy Design System
+   "Rewards Laziness": Soft, warm, sleepy, effortless.
+   Two themes: Light ("Afternoon Nap") & Dark ("Midnight Snooze")
+   Visual anchor: Snorlax Reference Palette
+   ============================================================ */
+
+:root,
+[data-theme="light"] {
+  /* Snorlax Reference Palette */
+  --snorlax-teal:    #00647B; /* Hero bg and body - exact match to reference image */
+  --snorlax-outline: #00323F; /* Thick outline */
+  --belly-cream:     #FFE4B5; /* Belly custard */
+  --pad-peach:       #F9C98F; /* Paw pads */
+  --claw-white:      #FFFFFF; /* Claws / fangs */
+
+  /* Theme: Afternoon Nap (Light Default) */
+  --bg:           #EAF4F2; /* soft mint-cream */
+  --surface:      #FFFFFF;
+  --surface-alt:  #F2F8F7;
+  --belly:        var(--belly-cream);
+  --belly-dark:   var(--pad-peach);
+  --snorlax:      var(--snorlax-teal);
+  --snorlax-dark: var(--snorlax-outline);
+  --snorlax-light:#E0EFF1;
+  --ink:          #162329;
+  --muted:        #4A5E66;
+  --border:       var(--snorlax-outline); /* chunky outline */
+  --accent:       #E3573D; /* Poké Ball red */
+  --accent-hover: #CC452C;
+  --sun:          #FFD23F; /* Focus ring & alert highlight */
+  --shadow-color: var(--snorlax-outline);
+
+  /* Berry Flavors */
+  --berry-spicy:     #D83C2D; /* Urgent / Cheri (Spicy) */
+  --berry-spicy-bg:  #FDECE9;
+  --berry-sour:      #C88700; /* High / Aspear (Sour) */
+  --berry-sour-bg:   #FEF8E6;
+  --berry-sweet:     #00627A; /* Normal / Pecha (Sweet) */
+  --berry-sweet-bg:  #E5F3F7;
+  --berry-dry:       #2E7D32; /* Newsletter / Rawst (Dry) */
+  --berry-dry-bg:    #E8F5E9;
+  --berry-mystery:   #6A459E; /* Unknown / Chesto */
+  --berry-mystery-bg:#F3EBF9;
+
+  /* Legacy aliases for safe fallback */
+  --bg-primary:   var(--bg);
+  --bg-secondary: var(--surface);
+  --bg-tertiary:  var(--surface-alt);
+  --border-color: #D3E4E2;
+  --text-main:    var(--ink);
+  --text-muted:   var(--muted);
+  --text-dim:     #6D848F;
+}
+
+[data-theme="dark"] {
+  /* Snorlax Reference Palette */
+  --snorlax-teal:    #00647B;
+  --snorlax-outline: #00323F;
+  --belly-cream:     #FFE4B5;
+  --pad-peach:       #F9C98F;
+  --claw-white:      #FFFFFF;
+
+  /* Theme: Midnight Snooze (Dark, deep Snorlax Teal) */
+  --bg:           #08171C; /* deep sleep night */
+  --surface:      #0C232B; /* cozy dark teal container */
+  --surface-alt:  #14323C;
+  --belly:        #E8CE9E;
+  --belly-dark:   #C4A26C;
+  --snorlax:      #1F7C94;
+  --snorlax-dark: #76C6D9; /* Luminous cyan-teal for AA contrast in Midnight Snooze dark mode */
+  --snorlax-light:#0C2B33;
+  --ink:          #F0F8FA;
+  --muted:        #A3C0C9;
+  --border:       #1E4E5E;
+  --accent:       #E3573D;
+  --accent-hover: #F06A52;
+  --sun:          #FFD23F;
+  --shadow-color: #030C0F;
+
+  /* Berry Flavors (Dark mode adjusted) */
+  --berry-spicy:     #FF7466;
+  --berry-spicy-bg:  #2D1311;
+  --berry-sour:      #FFD23F;
+  --berry-sour-bg:   #2E250A;
+  --berry-sweet:     #52B4CE;
+  --berry-sweet-bg:  #0C2833;
+  --berry-dry:       #66BB6A;
+  --berry-dry-bg:    #0F2914;
+  --berry-mystery:   #BFA0F2;
+  --berry-mystery-bg:#26183B;
+
+  /* Legacy aliases for safe fallback */
+  --bg-primary:   var(--bg);
+  --bg-secondary: var(--surface);
+  --bg-tertiary:  var(--surface-alt);
+  --border-color: #1A3E4A;
+  --text-main:    var(--ink);
+  --text-muted:   var(--muted);
+  --text-dim:     #8AA6B0;
+}
+
+/* Common Design Tokens */
+:root {
+  --font-logo:        'Press Start 2P', monospace;
+  --font-heading:     'Nunito', system-ui, -apple-system, sans-serif;
+  --font-body:        'Nunito', system-ui, -apple-system, sans-serif;
+  --font-handwriting: 'Caveat', cursive, sans-serif;
+
+  /* Strict Type Scale: nothing below 12px */
+  --text-badge: 12px;
+  --text-meta:  14px;
+  --text-body:  16px;
+  --text-h3:    20px;
+  --text-h2:    24px;
+  --text-h1:    32px;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --border-width: 3px;
+  --shadow-chunky: 4px 4px 0 var(--shadow-color);
+  --shadow-btn: 3px 3px 0 var(--shadow-color);
+  --shadow-btn-pressed: 1px 1px 0 var(--shadow-color);
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px var(--sun), 0 0 0 5px var(--snorlax-outline);
+
+  /* Density Modes */
+  --space-card: 24px;
+  --card-gap: 16px;
+}
+
+/* Compact density mode */
+[data-density="compact"] {
+  --space-card: 14px;
+  --card-gap: 10px;
+}
+
+[data-density="compact"] .hide-on-compact {
+  display: none !important;
+}
+
+/* Motion reduction */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
