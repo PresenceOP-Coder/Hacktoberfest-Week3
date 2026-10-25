@@ -74,7 +74,7 @@ export function getSnorlaxSpeech(urgentCount: number, dueSoonCount: number, allD
         [
           `${greeting} Nothing's on fire. I checked. Go back to sleep.`,
           `${greeting} Zero alarms today. Snorlax approves. Feel free to nap.`,
-          `${greeting} Clean quiet horizon. I handled the small stuff while you slept.`,
+          `${greeting} Clean calm horizon. I handled the small stuff while you slept.`,
         ],
         'zero-urgent'
       );
@@ -83,7 +83,7 @@ export function getSnorlaxSpeech(urgentCount: number, dueSoonCount: number, allD
       [
         `${greeting} Nothing urgent today. Just ${pluralize(dueSoonCount, 'snack', 'snacks')} to nibble on whenever you feel like it.`,
         `${greeting} No wake-up calls. ${pluralize(dueSoonCount, 'thing', 'things')} due later, but no rush right now.`,
-        `${greeting} Peace and quiet. ${pluralize(dueSoonCount, 'snack', 'snacks')} ahead, but nothing worth stressing over.`,
+        `${greeting} Peace and calm. ${pluralize(dueSoonCount, 'snack', 'snacks')} ahead, but nothing worth stressing over.`,
       ],
       'due-soon-only'
     );
@@ -178,7 +178,7 @@ export const EMPTY_STATES = {
   inbox: [
     'Inbox is clean. I did nothing. You did nothing. Perfect.',
     'No emails here. Snorlax checked twice.',
-    'All quiet in the fridge.',
+    'All calm in the fridge.',
   ],
 };
 

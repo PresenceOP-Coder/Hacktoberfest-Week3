@@ -531,7 +531,7 @@ export const AttentionDebtView: React.FC = () => {
               margin: 0,
             }}
           >
-            {searchQuery ? 'Try clearing your search query.' : 'Snorlax approves. Enjoy the quiet.'}
+            {searchQuery ? 'Try clearing your search query.' : 'Snorlax approves. Enjoy the calm.'}
           </p>
         </div>
       ) : (

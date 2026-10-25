@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 
-export type LazyButtonVariant = 'primary' | 'secondary' | 'quiet' | 'danger';
+export type LazyButtonVariant = 'primary' | 'secondary' | 'ghost' | 'quiet' | 'danger';
 
 export interface LazyButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: LazyButtonVariant;
@@ -40,7 +40,7 @@ export const LazyButton = forwardRef<HTMLButtonElement, LazyButtonProps>(({
     bg = 'var(--berry-spicy)';
     color = '#FFFFFF';
     borderColor = 'var(--border)';
-  } else if (variant === 'quiet') {
+  } else if (variant === 'ghost' || variant === 'quiet') {
     bg = 'var(--surface-alt)';
     color = 'var(--muted)';
     borderColor = 'var(--border)';

@@ -406,14 +406,14 @@ export const InboxView: React.FC = () => {
                 Quick Snack Presets:
               </div>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                <LazyButton variant="quiet" size="sm" type="button" icon={<BerrySpicy size={14} />} onClick={() => applyTemplate('urgent')}>
+                <LazyButton variant="ghost" size="sm" type="button" icon={<BerrySpicy size={14} />} onClick={() => applyTemplate('urgent')}>
                   Urgent Incident
                 </LazyButton>
-                <LazyButton variant="quiet" size="sm" type="button" icon={<Sparkles size={14} />} onClick={() => applyTemplate('extension')}>
+                <LazyButton variant="ghost" size="sm" type="button" icon={<Sparkles size={14} />} onClick={() => applyTemplate('extension')}>
                   Orion Extension
                 </LazyButton>
-                <LazyButton variant="quiet" size="sm" type="button" icon={<BerryDry size={14} />} onClick={() => applyTemplate('newsletter')}>
-                  Quiet Newsletter
+                <LazyButton variant="ghost" size="sm" type="button" icon={<BerryDry size={14} />} onClick={() => applyTemplate('newsletter')}>
+                  Tech Newsletter
                 </LazyButton>
               </div>
             </div>
@@ -508,7 +508,7 @@ export const InboxView: React.FC = () => {
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
-                <LazyButton variant="quiet" size="md" type="button" onClick={() => setShowModal(false)}>
+                <LazyButton variant="ghost" size="md" type="button" onClick={() => setShowModal(false)}>
                   Cancel
                 </LazyButton>
                 <LazyButton variant="primary" size="md" type="submit" disabled={submitting}>
@@ -994,7 +994,7 @@ export const InboxView: React.FC = () => {
           {filteredMessages.length > visibleLimit && (
             <div style={{ textAlign: 'center' }}>
               <LazyButton
-                variant="quiet"
+                variant="ghost"
                 size="md"
                 onClick={() => setVisibleLimit((prev) => prev + 25)}
               >

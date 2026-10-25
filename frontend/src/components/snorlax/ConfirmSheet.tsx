@@ -171,7 +171,7 @@ export const ConfirmSheet: React.FC<ConfirmSheetProps> = ({
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', flexWrap: 'wrap' }}>
           <LazyButton
             ref={cancelBtnRef}
-            variant="quiet"
+            variant="ghost"
             size="md"
             onClick={onCancel}
           >

@@ -269,7 +269,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       name: 'Sleep Mode Active',
       icon: <Moon size={24} color="var(--snorlax)" strokeWidth={2.5} />,
       earned: !!(quietStart && quietEnd && (quietStart !== '22:00' || quietEnd !== '08:00')),
-      desc: 'Configured custom Quiet Hours for restful peace.',
+      desc: 'Configured custom Sleep Hours for restful peace.',
     },
     {
       id: 'first-munch',
@@ -364,7 +364,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       {error && <RouteBlocked title="Settings Error" message={error} onRetry={loadData} />}
 
       {/* ============================================================
-          SCENE 1: THE BEDSIDE TABLE (Sleep Mode & Quiet Hours)
+          SCENE 1: THE BEDSIDE TABLE (Sleep Mode & Sleep Hours)
           Flat soft-tinted panel holding the sleep arc & native inputs
           ============================================================ */}
       <section
@@ -433,7 +433,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <div style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', fontWeight: 800 }}>
                 Night: {quietStart}
               </div>
-              <div style={{ fontSize: '13px', opacity: 0.9 }}>Quiet hours active</div>
+              <div style={{ fontSize: '13px', opacity: 0.9 }}>Sleep hours active</div>
             </div>
           </div>
 
@@ -465,7 +465,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '14px', fontWeight: 800, color: 'var(--ink)', marginBottom: '6px' }}>
-                Quiet hours start
+                Sleep hours start
               </label>
               <input
                 type="time"
@@ -487,7 +487,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
             <div>
               <label style={{ display: 'block', fontSize: '14px', fontWeight: 800, color: 'var(--ink)', marginBottom: '6px' }}>
-                Quiet hours end
+                Sleep hours end
               </label>
               <input
                 type="time"
@@ -550,7 +550,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 VIP Friends
               </label>
               <span style={{ fontSize: '13px', color: 'var(--muted)' }}>
-                Allowed to wake Snorlax during quiet hours.
+                Allowed to wake Snorlax during sleep hours.
               </span>
             </div>
 

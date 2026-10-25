@@ -428,7 +428,7 @@ export const DailyDigestView: React.FC = () => {
             {animatedMinutes} minutes of scrolling
             <HandDrawnUnderline color="var(--sun)" />
           </span>{' '}
-          and quietly put{' '}
+          and gently put{' '}
           <span style={{ position: 'relative', display: 'inline-block', color: 'var(--ink)', fontWeight: 800 }}>
             {pluralize(animatedNewsletters, 'newsletter', 'newsletters', 'all newsletters')} to bed
             <HandDrawnUnderline color="var(--berry-dry)" />
@@ -803,7 +803,7 @@ export const DailyDigestView: React.FC = () => {
 
                   <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', paddingTop: '4px' }}>
                     <LazyButton
-                      variant="quiet"
+                      variant="ghost"
                       size="sm"
                       title="Rest"
                       onClick={() => handleSnooze(task.task_id, task.title)}

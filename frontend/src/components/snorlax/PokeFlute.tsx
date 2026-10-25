@@ -8,7 +8,7 @@ interface PokeFluteButtonProps {
   tooltip?: string;
   onClick: () => Promise<void> | void;
   loading?: boolean;
-  variant?: 'primary' | 'secondary' | 'quiet' | 'danger';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'quiet' | 'danger';
   size?: 'sm' | 'md' | 'lg';
   style?: React.CSSProperties;
 }

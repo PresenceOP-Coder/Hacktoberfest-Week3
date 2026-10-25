@@ -82,7 +82,7 @@ export const SoundToggle: React.FC = () => {
   return (
     <button
       onClick={toggle}
-      title={enabled ? 'Sound On (WebAudio)' : 'Sound Off (Default — SnoozeBox is quiet)'}
+      title={enabled ? 'Sound On (WebAudio)' : 'Sound Off (Default — SnoozeBox is peaceful)'}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
