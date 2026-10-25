@@ -14,6 +14,7 @@ import (
 	"github.com/PresenceOP-Coder/Hacktoberfest-Week3/quiteos/internal/config"
 	"github.com/PresenceOP-Coder/Hacktoberfest-Week3/quiteos/internal/digest"
 	"github.com/PresenceOP-Coder/Hacktoberfest-Week3/quiteos/internal/domain"
+	"github.com/PresenceOP-Coder/Hacktoberfest-Week3/quiteos/internal/gmail"
 	"github.com/PresenceOP-Coder/Hacktoberfest-Week3/quiteos/internal/scheduler"
 	"github.com/PresenceOP-Coder/Hacktoberfest-Week3/quiteos/internal/store"
 	"github.com/google/uuid"
@@ -100,10 +101,12 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("GET /api/v1/runtime", s.handleRuntime)
 	s.mux.HandleFunc("GET /api/v1/account", s.handleGetAccount)
 	s.mux.HandleFunc("GET /api/v1/messages", s.handleListMessages)
+	s.mux.HandleFunc("POST /api/v1/messages", s.handleCreateMessage)
 	s.mux.HandleFunc("GET /api/v1/messages/{id}", s.handleGetMessage)
 	s.mux.HandleFunc("POST /api/v1/messages/{id}/analyze", s.handleAnalyzeMessage)
 	s.mux.HandleFunc("POST /api/v1/analyze/all", s.handleAnalyzeAll)
 	s.mux.HandleFunc("POST /api/v1/fixtures/import", s.handleImportFixtures)
+	s.mux.HandleFunc("POST /api/v1/fixtures/clear", s.handleClearFixtures)
 
 	// Task and Attention Debt routes
 	s.mux.HandleFunc("GET /api/v1/tasks", s.handleListTasks)
@@ -119,6 +122,12 @@ func (s *Server) registerRoutes() {
 	s.mux.HandleFunc("GET /api/v1/notifications", s.handleListNotifications)
 	s.mux.HandleFunc("GET /api/v1/settings", s.handleGetSettings)
 	s.mux.HandleFunc("PUT /api/v1/settings", s.handleUpdateSettings)
+
+	// Gmail OAuth2 & Sync routes
+	s.mux.HandleFunc("GET /api/v1/gmail/status", s.handleGmailStatus)
+	s.mux.HandleFunc("GET /api/v1/gmail/auth", s.handleGmailAuth)
+	s.mux.HandleFunc("POST /api/v1/gmail/exchange", s.handleGmailExchange)
+	s.mux.HandleFunc("POST /api/v1/gmail/sync", s.handleGmailSync)
 
 	// Static frontend serving if dist directory exists
 	for _, dir := range []string{"../frontend/dist", "frontend/dist", "./dist"} {
@@ -235,6 +244,84 @@ func (s *Server) handleListMessages(w http.ResponseWriter, r *http.Request) {
 		"offset":   offset,
 		"count":    len(msgs),
 	}, nil)
+}
+
+func (s *Server) handleCreateMessage(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	var req struct {
+		FromAddress string `json:"from_address"`
+		Subject     string `json:"subject"`
+		BodyText    string `json:"body_text"`
+		ThreadID    string `json:"thread_id"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		s.respond(w, http.StatusBadRequest, nil, &APIError{
+			Code:    "INVALID_BODY",
+			Message: "Failed to parse JSON body",
+		})
+		return
+	}
+	if strings.TrimSpace(req.FromAddress) == "" || strings.TrimSpace(req.Subject) == "" || strings.TrimSpace(req.BodyText) == "" {
+		s.respond(w, http.StatusBadRequest, nil, &APIError{
+			Code:    "MISSING_FIELDS",
+			Message: "from_address, subject, and body_text are required",
+		})
+		return
+	}
+
+	msgID := "msg-custom-" + uuid.NewString()[:8]
+	threadID := strings.TrimSpace(req.ThreadID)
+	if threadID == "" {
+		threadID = "thread-custom-" + uuid.NewString()[:8]
+	}
+
+	snippet := strings.TrimSpace(req.BodyText)
+	if len(snippet) > 120 {
+		snippet = snippet[:120] + "..."
+	}
+
+	now := time.Now().UTC()
+	msg := &domain.Message{
+		ID:          msgID,
+		AccountID:   s.cfg.DefaultAccountID,
+		GmailID:     "custom-" + msgID,
+		ThreadID:    threadID,
+		FromAddress: strings.TrimSpace(req.FromAddress),
+		ToAddresses: []string{s.cfg.DefaultAccountEmail},
+		Subject:     strings.TrimSpace(req.Subject),
+		ReceivedAt:  now,
+		Snippet:     snippet,
+		BodyText:    req.BodyText,
+		SyncStatus:  "synced",
+		CreatedAt:   now,
+		UpdatedAt:   now,
+	}
+
+	if err := s.store.SaveMessage(ctx, msg); err != nil {
+		s.respond(w, http.StatusInternalServerError, nil, &APIError{
+			Code:    "STORE_ERROR",
+			Message: err.Error(),
+		})
+		return
+	}
+
+	acc, _ := s.store.GetAccount(ctx, msg.AccountID)
+	tz := "UTC"
+	if acc != nil && acc.Timezone != "" {
+		tz = acc.Timezone
+	}
+
+	if s.analysisSvc != nil {
+		analysisRes, err := s.analysisSvc.ProcessMessage(ctx, msg, tz)
+		if err == nil {
+			msg.Analysis = analysisRes
+			if s.attentionEng != nil {
+				_, _ = s.attentionEng.ProcessMessageAnalysis(ctx, msg, analysisRes)
+			}
+		}
+	}
+
+	s.respond(w, http.StatusCreated, msg, nil)
 }
 
 func (s *Server) handleGetMessage(w http.ResponseWriter, r *http.Request) {
@@ -368,6 +455,42 @@ func (s *Server) handleImportFixtures(w http.ResponseWriter, r *http.Request) {
 		"imported_count": count,
 		"account_id":     s.cfg.DefaultAccountID,
 		"source":         s.cfg.FixturesFile,
+	}, nil)
+}
+
+func (s *Server) handleClearFixtures(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	// 1. Delete all synthetic mock fixtures (keeping real gmail- messages)
+	_, err := s.store.DB().ExecContext(ctx, "DELETE FROM messages WHERE id NOT LIKE 'gmail-%'")
+	if err != nil {
+		s.respond(w, http.StatusInternalServerError, nil, &APIError{
+			Code:    "DB_ERROR",
+			Message: err.Error(),
+		})
+		return
+	}
+
+	// 2. Delete tasks that were created only from mock messages
+	_, _ = s.store.DB().ExecContext(ctx, "DELETE FROM tasks WHERE id NOT IN (SELECT task_id FROM task_messages)")
+
+	// 3. Delete orphaned notifications
+	_, _ = s.store.DB().ExecContext(ctx, "DELETE FROM notifications WHERE task_id IS NULL OR task_id NOT IN (SELECT id FROM tasks)")
+
+	// 4. Re-sync attention debt for real messages
+	if s.attentionEng != nil {
+		_, _ = s.attentionEng.SyncAttentionDebt(ctx, s.cfg.DefaultAccountID)
+	}
+
+	// 5. Generate fresh digest based strictly on real messages
+	var dig *domain.Digest
+	if s.digestGen != nil {
+		dig, _ = s.digestGen.GenerateDailyDigest(ctx, s.cfg.DefaultAccountID, "")
+	}
+
+	s.respond(w, http.StatusOK, map[string]any{
+		"status":  "cleared",
+		"message": "Demo fixtures cleared. Only real synced data is active.",
+		"digest":  dig,
 	}, nil)
 }
 
@@ -773,4 +896,160 @@ func (s *Server) handleUpdateSettings(w http.ResponseWriter, r *http.Request) {
 	}
 
 	s.respond(w, http.StatusOK, prefs, nil)
+}
+
+
+// ─── Gmail OAuth2 & Sync Handlers ────────────────────────────────────────────
+
+func (s *Server) gmailSyncer() *gmail.Syncer {
+	return gmail.NewSyncer(s.store, s.cfg.DefaultAccountID, "credentials.json")
+}
+
+// GET /api/v1/gmail/status — returns whether Gmail is already authorized.
+func (s *Server) handleGmailStatus(w http.ResponseWriter, r *http.Request) {
+	g := s.gmailSyncer()
+	authorized := g.IsAuthorized()
+	s.respond(w, http.StatusOK, map[string]any{
+		"authorized":    authorized,
+		"creds_present": fileExists("credentials.json"),
+		"message": func() string {
+			if authorized {
+				return "Gmail is connected. Call POST /api/v1/gmail/sync to pull your inbox."
+			}
+			return "Not authorized yet. Call GET /api/v1/gmail/auth to get the consent URL."
+		}(),
+	}, nil)
+}
+
+// GET /api/v1/gmail/auth — returns the Google OAuth2 authorization URL to open in a browser.
+func (s *Server) handleGmailAuth(w http.ResponseWriter, r *http.Request) {
+	if !fileExists("credentials.json") {
+		s.respond(w, http.StatusBadRequest, nil, &APIError{
+			Code:    "CREDS_MISSING",
+			Message: "credentials.json not found in the quiteos/ directory. Download it from Google Cloud Console.",
+		})
+		return
+	}
+
+	g := s.gmailSyncer()
+	if g.IsAuthorized() {
+		s.respond(w, http.StatusOK, map[string]any{
+			"already_authorized": true,
+			"message":            "Gmail already authorized. Call POST /api/v1/gmail/sync to fetch your inbox.",
+		}, nil)
+		return
+	}
+
+	url, _, err := g.AuthorizeURL()
+	if err != nil {
+		s.respond(w, http.StatusInternalServerError, nil, &APIError{
+			Code:    "AUTH_ERROR",
+			Message: err.Error(),
+		})
+		return
+	}
+
+	s.respond(w, http.StatusOK, map[string]any{
+		"auth_url": url,
+		"instructions": "1. Open the auth_url in your browser. " +
+			"2. Log into your Google account and click Allow. " +
+			"3. Copy the authorization code shown. " +
+			"4. POST it to /api/v1/gmail/exchange as JSON: {\"code\": \"YOUR_CODE_HERE\"}",
+	}, nil)
+}
+
+// POST /api/v1/gmail/exchange — exchanges the authorization code for a stored token.
+func (s *Server) handleGmailExchange(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		Code string `json:"code"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil || strings.TrimSpace(req.Code) == "" {
+		s.respond(w, http.StatusBadRequest, nil, &APIError{
+			Code:    "MISSING_CODE",
+			Message: "JSON body must include {\"code\": \"<authorization_code>\"}",
+		})
+		return
+	}
+
+	g := s.gmailSyncer()
+	_, cfg, err := g.AuthorizeURL()
+	if err != nil {
+		s.respond(w, http.StatusInternalServerError, nil, &APIError{Code: "CONFIG_ERROR", Message: err.Error()})
+		return
+	}
+
+	if err := g.ExchangeCode(r.Context(), cfg, req.Code); err != nil {
+		s.respond(w, http.StatusBadRequest, nil, &APIError{
+			Code:    "EXCHANGE_FAILED",
+			Message: "Invalid or expired code: " + err.Error(),
+		})
+		return
+	}
+
+	s.respond(w, http.StatusOK, map[string]any{
+		"authorized": true,
+		"message":    "Gmail authorized successfully! Token saved. Now call POST /api/v1/gmail/sync to pull your inbox.",
+	}, nil)
+}
+
+// POST /api/v1/gmail/sync — fetches unread Gmail messages and ingests + analyzes them.
+func (s *Server) handleGmailSync(w http.ResponseWriter, r *http.Request) {
+	g := s.gmailSyncer()
+
+	if !g.IsAuthorized() {
+		s.respond(w, http.StatusUnauthorized, nil, &APIError{
+			Code:    "NOT_AUTHORIZED",
+			Message: "Gmail not authorized. Call GET /api/v1/gmail/auth first.",
+		})
+		return
+	}
+
+	var opts struct {
+		MaxResults int64 `json:"max_results"`
+	}
+	opts.MaxResults = 30
+	_ = json.NewDecoder(r.Body).Decode(&opts)
+	if opts.MaxResults < 1 || opts.MaxResults > 100 {
+		opts.MaxResults = 30
+	}
+
+	synced, err := g.FetchUnread(r.Context(), opts.MaxResults)
+	if err != nil {
+		s.respond(w, http.StatusInternalServerError, nil, &APIError{
+			Code:    "SYNC_FAILED",
+			Message: err.Error(),
+		})
+		return
+	}
+
+	// Auto-run Gemma analysis and attention debt sync on newly ingested messages
+	analyzed := 0
+	tasksSync := 0
+	if s.analysisSvc != nil && synced > 0 {
+		acc, _ := s.store.GetAccount(r.Context(), s.cfg.DefaultAccountID)
+		tz := "UTC"
+		if acc != nil && acc.Timezone != "" {
+			tz = acc.Timezone
+		}
+		n, err := s.analysisSvc.AnalyzeAllMessages(r.Context(), s.cfg.DefaultAccountID, tz)
+		if err == nil {
+			analyzed = n
+		}
+		if s.attentionEng != nil {
+			n2, _ := s.attentionEng.SyncAttentionDebt(r.Context(), s.cfg.DefaultAccountID)
+			tasksSync = n2
+		}
+	}
+
+	s.respond(w, http.StatusOK, map[string]any{
+		"synced_count":    synced,
+		"analyzed_count":  analyzed,
+		"attention_tasks": tasksSync,
+		"message":         "Inbox synced. Open the dashboard to see your real emails.",
+	}, nil)
+}
+
+func fileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil
 }

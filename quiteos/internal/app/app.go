@@ -61,9 +61,9 @@ func New(ctx context.Context, cfg *config.Config) (*App, error) {
 	digestGen := digest.NewGenerator(st)
 	sched := scheduler.NewScheduler(st)
 
-	// Auto-seed fixtures if table is empty
+	// Auto-seed fixtures ONLY if explicitly requested via SEED_FIXTURES=true
 	msgs, err := st.ListMessages(ctx, cfg.DefaultAccountID, 1, 0)
-	if err == nil && len(msgs) == 0 && cfg.FixturesFile != "" {
+	if err == nil && len(msgs) == 0 && cfg.FixturesFile != "" && os.Getenv("SEED_FIXTURES") == "true" {
 		if _, err := os.Stat(cfg.FixturesFile); err == nil {
 			log.Printf("[QuietOS] Seeding initial test fixtures from %s...", cfg.FixturesFile)
 			count, err := st.ImportFixtures(ctx, cfg.DefaultAccountID, cfg.FixturesFile)
