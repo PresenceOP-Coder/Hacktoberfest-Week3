@@ -118,59 +118,81 @@ export const Mascot: React.FC<MascotProps> = ({
           }}
         />
 
-        {/* Floating animated Z glyphs drifting gracefully beyond the painted snore trail */}
-        {(isHero || isLg) && (
-          <>
-            <svg
-              className="floating-z-1"
-              aria-hidden="true"
-              viewBox="0 0 125 115"
-              style={{
-                position: 'absolute',
-                top: isHero ? '-14%' : '-20%',
-                left: isHero ? '9%' : '5%',
-                width: isHero ? '28px' : '16px',
-                height: isHero ? '25px' : '14px',
-                pointerEvents: 'none',
-                overflow: 'visible',
-                zIndex: 5,
-              }}
-            >
-              <path
-                d="M 22,20 L 104,40 L 20,82 L 104,98"
-                fill="none"
-                stroke="var(--snorlax-outline, #00323F)"
-                strokeWidth="24"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <svg
-              className="floating-z-2"
-              aria-hidden="true"
-              viewBox="0 0 125 115"
-              style={{
-                position: 'absolute',
-                top: isHero ? '-24%' : '-30%',
-                left: isHero ? '2%' : '-2%',
-                width: isHero ? '22px' : '13px',
-                height: isHero ? '20px' : '12px',
-                pointerEvents: 'none',
-                overflow: 'visible',
-                zIndex: 5,
-              }}
-            >
-              <path
-                d="M 22,20 L 104,40 L 20,82 L 104,98"
-                fill="none"
-                stroke="var(--snorlax-outline, #00323F)"
-                strokeWidth="24"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </>
-        )}
+        {/* Sleeping Z glyphs with authentic hand-drawn vector paths & gentle floating animation */}
+        <svg
+          className="zzz-1"
+          aria-hidden="true"
+          viewBox="0 0 125 115"
+          style={{
+            position: 'absolute',
+            top: '22%',
+            left: '53%',
+            width: isHero ? '15px' : isLg ? '8px' : isMd ? '6px' : '4px',
+            height: isHero ? '14px' : isLg ? '7px' : isMd ? '5px' : '3px',
+            pointerEvents: 'none',
+            overflow: 'visible',
+            zIndex: 5,
+          }}
+        >
+          <path
+            d="M 22,20 L 104,40 L 20,82 L 104,98"
+            fill="none"
+            stroke="var(--snorlax-outline, #00323F)"
+            strokeWidth="24"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+
+        <svg
+          className="zzz-2"
+          aria-hidden="true"
+          viewBox="0 0 125 115"
+          style={{
+            position: 'absolute',
+            top: '15%',
+            left: '44%',
+            width: isHero ? '24px' : isLg ? '12px' : isMd ? '9px' : '5px',
+            height: isHero ? '22px' : isLg ? '11px' : isMd ? '8px' : '4px',
+            pointerEvents: 'none',
+            overflow: 'visible',
+            zIndex: 5,
+          }}
+        >
+          <path
+            d="M 22,20 L 104,40 L 20,82 L 104,98"
+            fill="none"
+            stroke="var(--snorlax-outline, #00323F)"
+            strokeWidth="24"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+
+        <svg
+          className="zzz-3"
+          aria-hidden="true"
+          viewBox="0 0 125 115"
+          style={{
+            position: 'absolute',
+            top: '5%',
+            left: '30%',
+            width: isHero ? '36px' : isLg ? '18px' : isMd ? '14px' : '7px',
+            height: isHero ? '32px' : isLg ? '16px' : isMd ? '12px' : '6px',
+            pointerEvents: 'none',
+            overflow: 'visible',
+            zIndex: 5,
+          }}
+        >
+          <path
+            d="M 22,20 L 104,40 L 20,82 L 104,98"
+            fill="none"
+            stroke="var(--snorlax-outline, #00323F)"
+            strokeWidth="24"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </div>
     );
   }

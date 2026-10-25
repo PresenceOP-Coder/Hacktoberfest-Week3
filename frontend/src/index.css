@@ -245,18 +245,36 @@ input, textarea, select {
 /* SVG Sleepy Zzz gentle float */
 @keyframes svgZzzFloat {
   0%, 100% {
-    transform: translate(0, 0);
-    opacity: 0.7;
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.85;
   }
   50% {
-    transform: translate(-3px, -4px);
+    transform: translate(-4px, -6px) rotate(-3deg);
     opacity: 1;
   }
 }
 
-.zzz-1 { animation: svgZzzFloat 2.4s ease-in-out infinite; }
-.zzz-2 { animation: svgZzzFloat 2.4s ease-in-out infinite 0.4s; }
-.zzz-3 { animation: svgZzzFloat 2.4s ease-in-out infinite 0.8s; }
+.zzz-1 {
+  animation: svgZzzFloat 2.6s ease-in-out infinite;
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+.zzz-2 {
+  animation: svgZzzFloat 2.6s ease-in-out infinite 0.45s;
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+.zzz-3 {
+  animation: svgZzzFloat 2.6s ease-in-out infinite 0.9s;
+  display: inline-block;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
 
 /* Snorlax Belly Breathing animation */
 @keyframes bellyBreathe {
