@@ -66,4 +66,4 @@ Write-Host ""
 Write-Host "Press Ctrl+C at any time to shut down SnoozeBox." -ForegroundColor Gray
 Write-Host "----------------------------------------------------------" -ForegroundColor DarkGray
 
-go run ./cmd/quietos
+go run ./cmd/snoozebox

@@ -518,7 +518,7 @@ export const App: React.FC = () => {
         {backendError ? (
           <RouteBlocked
             title="Route blocked. Snorlax is napping here."
-            message={`Cannot connect to SnoozeBox Go service on port 8080 (${backendError}). Please make sure quietos.exe is running on your machine.`}
+            message={`Cannot connect to SnoozeBox Go service on port 8080 (${backendError}). Please make sure snoozebox is running on your machine.`}
             onRetry={checkConnection}
           />
         ) : (

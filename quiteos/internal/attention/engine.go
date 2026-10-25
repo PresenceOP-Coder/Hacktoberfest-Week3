@@ -142,7 +142,7 @@ func (e *Engine) SyncAttentionDebt(ctx context.Context, accountID string) (int, 
 		if m.Analysis != nil {
 			t, err := e.ProcessMessageAnalysis(ctx, m, m.Analysis)
 			if err != nil {
-				log.Printf("[QuietOS] Error syncing attention debt for msg %s: %v", m.ID, err)
+				log.Printf("[SnoozeBox] Error syncing attention debt for msg %s: %v", m.ID, err)
 				continue
 			}
 			if t != nil {

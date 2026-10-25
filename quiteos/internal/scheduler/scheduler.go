@@ -66,7 +66,7 @@ func (s *Scheduler) SyncTaskReminders(ctx context.Context, accountID string) (in
 		}
 
 		if err := s.store.ScheduleNotification(ctx, notif); err != nil {
-			log.Printf("[QuietOS Scheduler] Error scheduling reminder for task %s: %v", t.ID, err)
+			log.Printf("[SnoozeBox Scheduler] Error scheduling reminder for task %s: %v", t.ID, err)
 			continue
 		}
 		scheduledCount++
@@ -101,13 +101,13 @@ func (s *Scheduler) ProcessDueNotifications(ctx context.Context, accountID strin
 			task, err := s.store.GetTask(ctx, *n.TaskID)
 			if err == nil && task != nil {
 				if task.Status == domain.TaskStatusCompleted || task.Status == domain.TaskStatusDismissed {
-					log.Printf("[QuietOS Scheduler] Suppressing reminder %s for completed task %s", n.ID, task.ID)
+					log.Printf("[SnoozeBox Scheduler] Suppressing reminder %s for completed task %s", n.ID, task.ID)
 					_ = s.store.MarkNotificationDelivered(ctx, n.ID)
 					continue
 				}
 				// Also check if task was snoozed past current time
 				if task.SnoozedUntil != nil && task.SnoozedUntil.After(now) {
-					log.Printf("[QuietOS Scheduler] Deferring reminder %s because task %s is snoozed", n.ID, task.ID)
+					log.Printf("[SnoozeBox Scheduler] Deferring reminder %s because task %s is snoozed", n.ID, task.ID)
 					n.ScheduledAt = *task.SnoozedUntil
 					n.Status = "scheduled"
 					_ = s.store.ScheduleNotification(ctx, n)
@@ -119,7 +119,7 @@ func (s *Scheduler) ProcessDueNotifications(ctx context.Context, accountID strin
 		// 2. Quiet Hours check
 		if prefs != nil && n.Kind != domain.NotificationKindUrgentMessage {
 			if isInQuietHours(now.In(userLoc), prefs.QuietHoursStart, prefs.QuietHoursEnd) {
-				log.Printf("[QuietOS Scheduler] Deferring notification %s: currently in quiet hours (%s - %s)",
+				log.Printf("[SnoozeBox Scheduler] Deferring notification %s: currently in quiet hours (%s - %s)",
 					n.ID, prefs.QuietHoursStart, prefs.QuietHoursEnd)
 				// Reschedule for quiet hours end
 				rescheduledAt := calculateQuietHoursEnd(now.In(userLoc), prefs.QuietHoursEnd).UTC()
@@ -132,12 +132,12 @@ func (s *Scheduler) ProcessDueNotifications(ctx context.Context, accountID strin
 
 		// 3. Mark delivered
 		if err := s.store.MarkNotificationDelivered(ctx, n.ID); err != nil {
-			log.Printf("[QuietOS Scheduler] Error marking delivered %s: %v", n.ID, err)
+			log.Printf("[SnoozeBox Scheduler] Error marking delivered %s: %v", n.ID, err)
 			continue
 		}
 
 		delivered = append(delivered, n)
-		log.Printf("[QuietOS Notification] Delivered [%s] %s: %s", n.Kind, n.Title, n.Body)
+		log.Printf("[SnoozeBox Notification] Delivered [%s] %s: %s", n.Kind, n.Title, n.Body)
 	}
 
 	return delivered, nil

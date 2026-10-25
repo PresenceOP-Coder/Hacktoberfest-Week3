@@ -108,7 +108,7 @@ func TestEvaluationHarness_GroundTruthMetrics(t *testing.T) {
 	urgentPrecision := float64(trueUrgentDetected) / float64(detectedUrgent)
 	deadlineAccuracy := float64(deadlinesCorrect) / float64(totalDeadlinesTruth)
 
-	t.Logf("=== QuietOS Evaluation Results (%d emails) ===", len(fixtures))
+	t.Logf("=== SnoozeBox Evaluation Results (%d emails) ===", len(fixtures))
 	t.Logf("Urgent Recall:     %.1f%% (%d/%d)", urgentRecall*100, trueUrgentDetected, totalUrgentTruth)
 	t.Logf("Urgent Precision:  %.1f%% (%d/%d)", urgentPrecision*100, trueUrgentDetected, detectedUrgent)
 	t.Logf("Deadline Exactness: %.1f%% (%d/%d)", deadlineAccuracy*100, deadlinesCorrect, totalDeadlinesTruth)

@@ -109,7 +109,7 @@ func (g *Generator) GenerateDailyDigest(ctx context.Context, accountID string, t
 	}
 
 	totalCount := len(urgentItems) + len(dueSoonTasks) + len(pendingActions)
-	headline := fmt.Sprintf("QuietOS Morning Digest: %d urgent items, %d tasks due soon.", len(urgentItems), len(dueSoonTasks))
+	headline := fmt.Sprintf("SnoozeBox Morning Digest: %d urgent items, %d tasks due soon.", len(urgentItems), len(dueSoonTasks))
 	if len(urgentItems) == 0 && len(dueSoonTasks) == 0 {
 		headline = "All quiet: No urgent emails or imminent deadlines today."
 	}

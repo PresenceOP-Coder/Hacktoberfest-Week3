@@ -34,7 +34,7 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
     const errorMsg =
       json?.error?.message ||
       (res.status === 502 || res.status === 504
-        ? 'Local backend on port 8080 is unreachable. Ensure quietos.exe is running.'
+        ? 'Local backend on port 8080 is unreachable. Ensure snoozebox is running.'
         : `Server returned status ${res.status}`);
     throw new Error(errorMsg);
   }
@@ -44,7 +44,7 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
   }
 
   if (!json && res.status !== 204) {
-    throw new Error('Local backend returned an empty response. Ensure quietos.exe is running on port 8080.');
+    throw new Error('Local backend returned an empty response. Ensure snoozebox is running on port 8080.');
   }
 
   return json?.data;

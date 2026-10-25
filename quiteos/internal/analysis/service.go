@@ -132,7 +132,7 @@ func (s *Service) AnalyzeAllMessages(ctx context.Context, accountID, userTZ stri
 			}
 			_, err = s.ProcessMessage(ctx, fullMsg, userTZ)
 			if err != nil {
-				log.Printf("[QuietOS] Error analyzing message %s: %v", m.ID, err)
+				log.Printf("[SnoozeBox] Error analyzing message %s: %v", m.ID, err)
 				continue
 			}
 			processedCount++

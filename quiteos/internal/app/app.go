@@ -65,28 +65,28 @@ func New(ctx context.Context, cfg *config.Config) (*App, error) {
 	msgs, err := st.ListMessages(ctx, cfg.DefaultAccountID, 1, 0)
 	if err == nil && len(msgs) == 0 && cfg.FixturesFile != "" && os.Getenv("SEED_FIXTURES") == "true" {
 		if _, err := os.Stat(cfg.FixturesFile); err == nil {
-			log.Printf("[QuietOS] Seeding initial test fixtures from %s...", cfg.FixturesFile)
+			log.Printf("[SnoozeBox] Seeding initial test fixtures from %s...", cfg.FixturesFile)
 			count, err := st.ImportFixtures(ctx, cfg.DefaultAccountID, cfg.FixturesFile)
 			if err != nil {
-				log.Printf("[QuietOS] Warning: failed seeding fixtures: %v", err)
+				log.Printf("[SnoozeBox] Warning: failed seeding fixtures: %v", err)
 			} else {
-				log.Printf("[QuietOS] Seeded %d test emails successfully.", count)
+				log.Printf("[SnoozeBox] Seeded %d test emails successfully.", count)
 				// Pre-analyze seeded fixtures & sync attention debt
 				go func() {
 					bgCtx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 					defer cancel()
-					log.Printf("[QuietOS] Performing initial AI analysis on test fixtures...")
+					log.Printf("[SnoozeBox] Performing initial AI analysis on test fixtures...")
 					analyzed, err := analysisSvc.AnalyzeAllMessages(bgCtx, cfg.DefaultAccountID, defaultAcc.Timezone)
 					if err != nil {
-						log.Printf("[QuietOS] Initial analysis error: %v", err)
+						log.Printf("[SnoozeBox] Initial analysis error: %v", err)
 					} else {
-						log.Printf("[QuietOS] Initial analysis completed: %d messages analyzed.", analyzed)
+						log.Printf("[SnoozeBox] Initial analysis completed: %d messages analyzed.", analyzed)
 						// Sync into Attention Debt
 						synced, err := attentionEng.SyncAttentionDebt(bgCtx, cfg.DefaultAccountID)
 						if err != nil {
-							log.Printf("[QuietOS] Attention debt sync error: %v", err)
+							log.Printf("[SnoozeBox] Attention debt sync error: %v", err)
 						} else {
-							log.Printf("[QuietOS] Attention debt initialized: %d active responsibilities mapped.", synced)
+							log.Printf("[SnoozeBox] Attention debt initialized: %d active responsibilities mapped.", synced)
 							// Schedule initial reminders
 							_, _ = sched.SyncTaskReminders(bgCtx, cfg.DefaultAccountID)
 						}
@@ -146,7 +146,7 @@ func (a *App) Run() error {
 
 	serverErr := make(chan error, 1)
 	go func() {
-		log.Printf("[QuietOS] Starting local server at http://%s", a.server.Addr)
+		log.Printf("[SnoozeBox] Starting local server at http://%s", a.server.Addr)
 		if err := a.server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			serverErr <- err
 		}
@@ -156,7 +156,7 @@ func (a *App) Run() error {
 	case err := <-serverErr:
 		return fmt.Errorf("server error: %w", err)
 	case sig := <-shutdown:
-		log.Printf("[QuietOS] Received shutdown signal: %v", sig)
+		log.Printf("[SnoozeBox] Received shutdown signal: %v", sig)
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -172,6 +172,6 @@ func (a *App) Run() error {
 		return fmt.Errorf("closing database: %w", err)
 	}
 
-	log.Printf("[QuietOS] Server gracefully stopped.")
+	log.Printf("[SnoozeBox] Server gracefully stopped.")
 	return nil
 }

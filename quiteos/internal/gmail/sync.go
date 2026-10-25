@@ -43,7 +43,7 @@ func (s *Syncer) AuthorizeURL() (string, *oauth2.Config, error) {
 	if err != nil {
 		return "", nil, err
 	}
-	url := cfg.AuthCodeURL("quietos-state", oauth2.AccessTypeOffline)
+	url := cfg.AuthCodeURL("snoozebox-state", oauth2.AccessTypeOffline)
 	return url, cfg, nil
 }
 
@@ -165,7 +165,7 @@ func saveToken(file string, tok *oauth2.Token) error {
 	return json.NewEncoder(f).Encode(tok)
 }
 
-// gmailToMessage converts a Gmail API message into a QuietOS domain.Message.
+// gmailToMessage converts a Gmail API message into a SnoozeBox domain.Message.
 func gmailToMessage(accountID string, m *googleGmail.Message) *domain.Message {
 	headers := make(map[string]string)
 	for _, h := range m.Payload.Headers {

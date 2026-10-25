@@ -1,4 +1,4 @@
-// Command quietos is the entry point for the QuietOS service.
+// Command quietos is a backwards-compatible entry point for the SnoozeBox service.
 package main
 
 import (
